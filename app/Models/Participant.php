@@ -13,7 +13,7 @@ class Participant extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fullname', 'email', 'whatsapp', 'blog_link'
+        'fullname', 'email', 'whatsapp', 'blog_link', 'status', 'description'
     ];
 
     /**

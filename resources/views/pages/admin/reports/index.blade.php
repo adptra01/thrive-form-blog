@@ -4,7 +4,7 @@ use function Livewire\Volt\{state};
 use App\Models\Participant;
 use function Laravel\Folio\name;
 
-name('participants.index');
+name('reports.index');
 
 state(['participants' => fn() => Participant::latest()->get()])->url();
 
@@ -13,7 +13,7 @@ state(['participants' => fn() => Participant::latest()->get()])->url();
 
 <x-admin-layout>
     <x-slot name="title">Laporan Thrive Blog Competition 2024</x-slot>
-    @include('layouts.table')
+    @include('layouts.datatables')
     @volt
         <div>
             <nav aria-label="breadcrumb">
@@ -22,11 +22,10 @@ state(['participants' => fn() => Participant::latest()->get()])->url();
                         <a href="/home">Beranda</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <a href="#">Peserta</a>
+                        <a href="#">Laporan</a>
                     </li>
                 </ol>
             </nav>
-
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -48,6 +47,7 @@ state(['participants' => fn() => Participant::latest()->get()])->url();
                                         <th>{{ $item->fullname }}</th>
                                         <th>{{ $item->email }}</th>
                                         <th>{{ $item->whatsapp }}</th>
+
                                         <th>
                                             <span
                                                 class="badge {{ $item->status == 'MENUNGGU' ? 'bg-warning' : ($item->status == 'TERIMA' ? 'bg-success' : 'bg-danger') }}">
@@ -55,10 +55,9 @@ state(['participants' => fn() => Participant::latest()->get()])->url();
                                             </span>
                                         </th>
                                         <th>
-                                            <a href="{{ route('participants.show', ['participant' => $item->id]) }}"
-                                                class="btn btn-primary btn-sm">
-                                                Detail
-                                            </a>
+                                            <div class="text-center">
+                                                {{ $item->description ?? '-' }}
+                                            </div>
                                         </th>
                                     </tr>
                                 @endforeach

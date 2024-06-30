@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('whatsapp');
             $table->string('blog_link');
+            $table->enum('status', ['MENUNGGU', 'TERIMA', 'TOLAK'])->default('MENUNGGU');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }

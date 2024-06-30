@@ -1,6 +1,6 @@
 <?php
 
-use function Livewire\Volt\{state};
+use function Livewire\Volt\{state, on};
 use App\Models\Participant;
 use function Laravel\Folio\name;
 
@@ -12,12 +12,14 @@ state([
     'whatsapp' => fn() => $this->participant->whatsapp,
     'blog_link' => fn() => $this->participant->blog_link,
     'fileExtension' => fn() => pathinfo($this->participant->documents->first()->file_path, PATHINFO_EXTENSION),
-    'fileFollows' => fn() => $this->participant->follows,
+    'imageExtension' => fn() => pathinfo($this->participant->follows->first()->image_path, PATHINFO_EXTENSION),
+    'status' => fn() => $this->participant->status,
+    'description' => fn() => $this->participant->description,
     'participant',
 ]);
 
 $download = function () {
-    $filePath = $this->participant->documents->first()->file_path; // Sesuaikan path dengan lokasi file Anda
+    $filePath = statusdocuments->first()->file_path;
 
     if (Storage::exists($filePath)) {
         return Storage::download($filePath);
@@ -25,50 +27,55 @@ $download = function () {
 
     $this->dispatch('download-failed');
 };
+
+on([
+    'update-status' => function () {
+        $this->status = $this->status;
+    },
+]);
+
+$statusPending = function () {
+    Participant::whereId($this->participant->id)->update(['status' => 'MENUNGGU']);
+    $this->dispatch('update-status');
+};
+$statusAccept = function () {
+    Participant::whereId($this->participant->id)->update(['status' => 'TERIMA']);
+    $this->dispatch('update-status');
+};
+$statusReject = function () {
+    Participant::whereId($this->participant->id)->update(['status' => 'TOLAK']);
+    $this->dispatch('update-status');
+};
+
+$descriptionSaved = function () {
+    Participant::whereId($this->participant->id)->update([
+        'description' => $this->description,
+    ]);
+};
+
 ?>
 
 
 <x-admin-layout>
     <x-slot name="title">Partisipan {{ $participant->fullname }}</x-slot>
 
-    @push('styles')
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.thumbs.css" />
-
-        <style>
-            img {
-                max-width: 100%;
-                height: auto;
-            }
-
-            #myCarousel {
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            #myCarousel .f-carousel__slide {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        </style>
-    @endpush
-
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.umd.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.thumbs.umd.js"></script>
-        <script>
-            new Carousel(document.getElementById("myCarousel"), {
-                // Your custom options
-                Dots: false
-            }, {
-                Thumbs
-            });
-        </script>
-    @endpush
 
     @volt
         <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/home">Beranda</a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a href="{{ route('participants.index') }}">Peserta</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="#">{{ $participant->fullname }}</a>
+                    </li>
+                </ol>
+            </nav>
+
             <div class="card">
                 <div class="card-body">
                     <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
@@ -78,8 +85,16 @@ $download = function () {
                     </div>
                     <div class="mb-3 row">
                         <p class="col-md-3 fw-bold">Nama Lengkap</p>
-                        <div class="col-md-9">
-                            <p>: {{ $participant->fullname ?? '' }}</p>
+                        <div class="col-md-9 d-flex">
+                            :
+                            <p class="ms-1">
+                                {{ $participant->fullname ?? '' }}
+                                <span
+                                    class="badge {{ $participant->status == 'MENUNGGU' ? 'bg-warning' : ($participant->status == 'TERIMA' ? 'bg-success' : 'bg-danger') }}">
+                                    {{ $participant->status }}
+                                </span>
+                                </h6>
+
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -89,7 +104,7 @@ $download = function () {
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <p class="col-md-3 fw-bold">whatsapp</p>
+                        <p class="col-md-3 fw-bold">Whatsapp</p>
                         <div class="col-md-9">
                             <p>: {{ $participant->whatsapp ?? '' }}</p>
                         </div>
@@ -104,68 +119,49 @@ $download = function () {
                             </p>
                         </div>
                     </div>
+                    <div class="mb-3 row">
+                        <p class="col-md-3 fw-bold">Status</p>
+                        <div class="col-md-9 ">
+                            :
+                            <div class="form-check form-check-inline">
+                                <input wire:loading.attr='disabled' wire:click="statusPending" class="form-check-input"
+                                    type="radio" name="status" id="menunggu" value="menunggu"
+                                    {{ $participant->status == 'MENUNGGU' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="menunggu">Menunggu</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input wire:loading.attr='disabled' wire:click="statusAccept" class="form-check-input"
+                                    type="radio" name="status" id="terima" value="terima"
+                                    {{ $participant->status == 'TERIMA' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="terima">Terima</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input wire:loading.attr='disabled' wire:click="statusReject" class="form-check-input"
+                                    type="radio" name="status" id="tolak" value="tolak"
+                                    {{ $participant->status == 'TOLAK' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="tolak">Tolak</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <p class="col-md-3 fw-bold">Keterangan (Opsional)</p>
+                        <div class="col-md-9 text-end">
+                            <form wire:submit='descriptionSaved'>
+                                @csrf
+                                <div class="d-flex mb-2">
+                                    :
+                                    <textarea class="form-control ms-2" wire:model='description' rows="5">
+                                        {{ $description }}
+                                    </textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm" role="button">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-document-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-document" type="button" role="tab"
-                                aria-controls="pills-document" aria-selected="true">
-                                File Blog
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-follows-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-follows" type="button" role="tab" aria-controls="pills-follows"
-                                aria-selected="false">
-                                Bukti Mengikuti
-                            </button>
-                        </li>
-
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-document" role="tabpanel"
-                            aria-labelledby="pills-document-tab">
-
-
-                            @if ($fileExtension === 'pdf')
-                                <object class="pdf rounded"
-                                    data="{{ Storage::url($participant->documents->first()->file_path) }}" width="100%"
-                                    height="600">
-                                    Your browser does not support PDF viewing. Please download the PDF to view it: <a
-                                        href="{{ Storage::url($participant->documents->first()->file_path) }}">Download
-                                        PDF</a>.
-                                </object>
-                            @else
-                                <p>Jenis berkas tidak didukung. Lakukan unduh berkas
-                                    <a wire:click="download"
-                                        class="text-primary fw-bold">({{ $this->participant->documents->first()->file_path ?? 'Tidak di temukan' }})</a>
-
-                                <div class="d-flex">
-                                    <div wire:loading class="spinner-border spinner-border-sm" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-
-                                    <x-alert on="download-failed" class="text-danger fw-bold">
-                                        Error
-                                        <i class="bi bi-x-octagon text-danger"></i>
-                                    </x-alert>
-                                </div>
-                                </p>
-                            @endif
-                        </div>
-                        <div class="tab-pane fade" id="pills-follows" role="tabpanel" aria-labelledby="pills-follows-tab">
-                            <div class="f-carousel" id="myCarousel">
-                                @foreach ($fileFollows as $no => $follow)
-                                    <div class="f-carousel__slide" data-thumb-src="{{ Storage::url($follow->image_path) }}">
-                                        <img width="100%" height="auto" alt="{{ $follow->participant->fullname }}"
-                                            data-lazy-src="{{ Storage::url($follow->image_path) }}" />
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                    </div>
+                    @include('pages.admin.participants.tabs')
                 </div>
 
             </div>

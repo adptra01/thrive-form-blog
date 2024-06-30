@@ -18,7 +18,7 @@ state([
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="#">Beranda</a>
+                <a href="/home">Beranda</a>
             </li>
         </ol>
     </nav>
@@ -29,7 +29,7 @@ state([
                 <div class="d-flex align-items-end row">
                     <div class="col-sm-7">
                         <div class="card-body">
-                            <h5 class="card-title text-primary">Selaamt datang {{ auth()->user()->name }}! 🎉</h5>
+                            <h4 class="card-title text-primary fw-bold">Halloo {{ auth()->user()->name }}! 🎉</h4>
                             <p class="mb-4">Kamu telah memiliki <span class="fw-medium">{{ $count }}</span>
                                 pendaftar hari ini, periksa detail-nya.</p>
                         </div>
