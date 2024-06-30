@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}">
     @stack('styles')
+    @livewireStyles
     @vite([])
 </head>
 
@@ -65,6 +66,12 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
     @stack('scripts')
+
+    @livewireScripts
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <x-livewire-alert::scripts />
 </body>
 
 </html>

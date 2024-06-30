@@ -1,6 +1,7 @@
 <?php
 use function Laravel\Folio\name;
-use function Livewire\Volt\{state, rules, usesFileUploads};
+use function Livewire\Volt\{state, rules, usesFileUploads, uses};
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Participant;
 use App\Models\Document;
 use App\Models\Follow;
@@ -8,6 +9,8 @@ use App\Models\Follow;
 name('welcome');
 
 usesFileUploads();
+
+uses(LivewireAlert::class); // Tambahkan trait LivewireAlert
 
 state([
     'document' => null,
@@ -30,41 +33,58 @@ rules([
 ]);
 
 $save = function () {
-    $this->validate();
+    try {
+        $this->validate();
 
-    // Menyimpan data participant
-    $participant = Participant::create([
-        'fullname' => $this->fullname,
-        'email' => $this->email,
-        'whatsapp' => $this->whatsapp,
-        'blog_link' => $this->blog_link,
-    ]);
+        // Menyimpan data participant
+        $participant = Participant::create([
+            'fullname' => $this->fullname,
+            'email' => $this->email,
+            'whatsapp' => $this->whatsapp,
+            'blog_link' => $this->blog_link,
+        ]);
 
-    // Menyimpan dokumen
-    if ($this->document) {
-        $documentName = $this->generateDocumentName($this->document->getClientOriginalExtension());
-        $documentPath = $this->document->storeAs(path: 'public/documents', name: $documentName);
-        Document::create([
-            'file_path' => $documentPath,
-            'participant_id' => $participant->id,
+        // Menyimpan dokumen
+        if ($this->document) {
+            $documentName = $this->generateDocumentName($this->document->getClientOriginalExtension());
+            $documentPath = $this->document->storeAs(path: 'public/documents', name: $documentName);
+            Document::create([
+                'file_path' => $documentPath,
+                'participant_id' => $participant->id,
+            ]);
+        }
+
+        // Menyimpan bukti follow
+        foreach ($this->follows as $follow) {
+            $followName = $this->generateFollowName($follow->getClientOriginalExtension());
+            $followPath = $follow->storeAs(path: 'public/follows', name: $followName);
+            Follow::create([
+                'image_path' => $followPath,
+                'participant_id' => $participant->id,
+            ]);
+        }
+
+        // Reset form setelah submit berhasil
+        $this->reset(['follows', 'fullname', 'email', 'whatsapp', 'blog_link', 'document']);
+
+        $this->flash('success', 'Completed', [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => false,
+            'showConfirmButton' => false,
+            'onConfirmed' => '',
+            'confirmButtonText' => 'SUBMIT FORMULIR BARU',
+            'text' => 'Formulir telah berhasil disubmit.',
+        ]);
+    } catch (\Throwable $th) {
+        $this->alert('error', 'Data tidak valid', [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => false,
+            'text' => 'Mohon periksa kembali data yang diinput. Pastikan semua isian sesuai.',
+            'timerProgressBar' => true,
         ]);
     }
-
-    // Menyimpan bukti follow
-    foreach ($this->follows as $follow) {
-        $followName = $this->generateFollowName($follow->getClientOriginalExtension());
-        $followPath = $follow->storeAs(path: 'public/follows', name: $followName);
-        Follow::create([
-            'image_path' => $followPath,
-            'participant_id' => $participant->id,
-        ]);
-    }
-
-    // Reset form setelah submit berhasil
-    $this->reset(['follows', 'fullname', 'email', 'whatsapp', 'blog_link', 'document']);
-
-    // Beri notifikasi berhasil
-    session()->flash('message', 'Form berhasil disubmit!');
 };
 
 $generateDocumentName = function ($extension) {
@@ -360,19 +380,16 @@ $updatedDocument = function () {
                     <div class="card-body">
                         <div class="d-grid">
                             <button type="submit" class="btn btn-custom">
-                                SUBMIT
+                                <span wire:loading.class='d-none'>SUBMIT</span>
+                                <div wire:loading wire:target='save' class="spinner-border spinner-border-sm"
+                                    role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </button>
                         </div>
 
                         <div class="text-center">
-                            <div wire:loading wire:target='save' class="spinner-border spinner-border-sm" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
 
-                            <x-alert on="error-saved" class="text-danger fw-bold">
-                                Error
-                                <i class="bi bi-x-octagon text-danger"></i>
-                            </x-alert>
                         </div>
 
                     </div>
