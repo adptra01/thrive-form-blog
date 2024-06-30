@@ -41,7 +41,7 @@ $save = function () {
     // Menyimpan dokumen
     if ($this->document) {
         $documentName = $this->generateDocumentName($this->document->getClientOriginalExtension());
-        $documentPath = $this->document->storeAs('documents', $documentName);
+        $documentPath = $this->document->storeAs(path: 'public/documents', name: $documentName);
         Document::create([
             'image' => $documentPath,
             'participant_id' => $participant->id,
@@ -51,7 +51,7 @@ $save = function () {
     // Menyimpan bukti follow
     foreach ($this->follows as $follow) {
         $followName = $this->generateFollowName($follow->getClientOriginalExtension());
-        $followPath = $follow->storeAs('follows', $followName);
+        $followPath = $follow->storeAs(path: 'public/follows', name: $followName);
         Follow::create([
             'image' => $followPath,
             'participant_id' => $participant->id,
