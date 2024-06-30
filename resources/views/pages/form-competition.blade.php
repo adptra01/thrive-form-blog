@@ -10,12 +10,14 @@ name('welcome');
 usesFileUploads();
 
 state([
+    'document' => null,
+    'prevDocument' => null,
     'follows' => [],
+    'prevfollows',
     'fullname',
     'email',
     'whatsapp',
     'blog_link',
-    'document',
 ]);
 
 rules([
@@ -80,11 +82,53 @@ $generateFollowName = function ($extension) {
     return $fileName;
 };
 
+$updatingFollows = function ($value) {
+    $this->prevfollows = $this->follows;
+};
+
+$updatedFollows = function ($value) {
+    $this->follows = array_merge($this->prevfollows, $value);
+};
+
+$removeItem = function ($key) {
+    if (isset($this->follows[$key])) {
+        $file = $this->follows[$key];
+        $file->delete();
+        unset($this->follows[$key]);
+    }
+
+    $this->follows = array_values($this->follows);
+};
+
+$updatingDocument = function () {
+    $this->prevDocument = $this->document;
+};
+
+$updatedDocument = function () {
+    // Hapus file sebelumnya jika ada
+    if ($this->prevDocument) {
+        $this->prevDocument->delete();
+        $this->prevDocument = null;
+    }
+};
+
 ?>
 <x-guest-layout>
     <x-slot name="title">
         Thrive Blog Competition 2024
     </x-slot>
+    <style>
+        #dropZone {
+            border: 2px dashed #bbb;
+            border-radius: 5px;
+            padding: 50px;
+            text-align: center;
+            font-size: 21pt;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            color: #bbb;
+        }
+    </style>
 
 
     @include('pages.modal-form')
@@ -166,18 +210,38 @@ $generateFollowName = function ($extension) {
                 <div class="card my-3 border-0">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="document" class="form-label">
-                                Upload karya tulis dalam bentuk file
+                            <label for="documentInput" class="form-label">
+                                Upload Document
                             </label>
-                            <input type="file" class="form-control rounded-3" wire:model="document" id="document"
-                                aria-describedby="documentId" accept=".pdf,.doc,.docx" />
+                            <label id="dropZone"
+                                class="d-flex align-items-center justify-content-center flex-column w-100 {{ $document ? 'd-none' : '' }}">
+                                <p> <i class="bi bi-cloud-arrow-down"></i>
+                                </p>
+                                <small style="font-size: 17px;">Drop file here or click to upload</small>
+                                <input type="file" class="d-none" id="documentInput" wire:model="document"
+                                    accept=".pdf,.doc,.docx">
+                            </label>
 
                             <!-- Error document -->
                             @error('document')
                                 <small id="documentId" class="form-text color-custom"> {{ $message }} </small>
                             @enderror
-
                         </div>
+
+                        @if ($document)
+                            <div class="card my-2">
+                                <div class="card-body">
+                                    <div class="hstack justify-content-between align-items-center">
+                                        <i class="bi bi-file-earmark-post"></i>
+                                        {{ $document->getClientOriginalName() }}
+                                        <a type="button" wire:click.prevent='$set("document", null)'>
+                                            <i class="bi bi-x-lg"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         <small class="form-text text-muted m-0">
                             <strong>Upload File Maks 5 MB</strong> (format .pdf, .doc atau .docx)
                             <br>
@@ -193,11 +257,19 @@ $generateFollowName = function ($extension) {
                 <div class="card my-3 border-0">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="follows" class="form-label">
+                            <label for="imageInput" class="form-label">
                                 Bukti follow akun social media Thrive Indonesia
                             </label>
-                            <input type="file" class="form-control rounded-3" wire:model="follows" id="follows"
-                                aria-describedby="followsId" accept=".pdf,.jpg,.jpeg" multiple />
+                            <label for="imageInput"
+                                class="{{ $follows ? (count($follows) >= 5 ? 'd-none' : '') : '' }} w-100">
+                                <div id="dropZone" class="d-flex align-items-center justify-content-center flex-column">
+                                    <p> <i class="bi bi-cloud-arrow-down"></i>
+                                    </p>
+                                    <small style="font-size: 17px;">Drop file here or click to upload</small>
+                                    <input type="file" class="d-none" id="imageInput" wire:model.live="follows"
+                                        accept=".pdf,.jpg,.jpeg" multiple>
+                                </div>
+                            </label>
 
                             <!-- Error follow sosmed -->
                             @error('follows.*')
@@ -205,6 +277,25 @@ $generateFollowName = function ($extension) {
                                 </small>
                             @enderror
                         </div>
+
+                        @if (!empty($follows))
+                            @foreach ($follows as $key => $item)
+                                <div class="card my-2">
+                                    <div class="card-body">
+                                        <div class="hstack justify-content-between align-items-center">
+                                            <div class="me-2" style="font-size: 2rem; color: #777;">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            {{ Str::limit($item->getClientOriginalName(), 20, '...') }}
+                                            <a type="button" wire:click.prevent='removeItem({{ json_encode($key) }})'>
+                                                <i class="bi bi-x-lg"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+
                         <small class="form-text text-muted m-0">
                             <strong>Upload File Maks 5 MB</strong> (format .pdf, .jpg atau
                             .jpeg)
