@@ -21,6 +21,6 @@ class GuestLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.guest-layout');
+        return view('layouts.guest-layout');
     }
 }
