@@ -134,23 +134,6 @@ $updatedDocument = function () {
 
 ?>
 <x-guest-layout>
-    <x-slot name="title">
-        Thrive Blog Competition 2024
-    </x-slot>
-    <style>
-        #dropZone {
-            border: 2px dashed #bbb;
-            border-radius: 5px;
-            padding: 50px;
-            text-align: center;
-            font-size: 21pt;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            color: #bbb;
-        }
-    </style>
-
-
     @include('pages.modal-form')
 
     @volt

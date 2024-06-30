@@ -209,3 +209,14 @@ body {
 .btn-outline-custom:active:focus, .btn-outline-custom.active:focus, .show > .btn-outline-custom.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(225, 113, 38, 0.5);
 }
+
+#dropZone {
+    border: 2px dashed #bbb;
+    border-radius: 5px;
+    padding: 50px;
+    text-align: center;
+    font-size: 21pt;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    color: #bbb;
+}

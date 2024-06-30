@@ -9,22 +9,44 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Thrive Web Blog Competition 2024' }}</title>
+    <title>{{ $title ?? 'Thrive Web Blog Competition 2024' }} - Perusahaan IT Terbaik Sejak 2007 di Indonesia</title>
 
-    {{-- <link rel="icon" type="image/x-icon" href="{{ asset('/assets/img/favicon/favicon.ico') }}" /> --}}
+    <meta name="description"
+        content="Temukan berbagai solusi dan produk IT untuk beragam kebutuhan bisnis dan perusahaan. Bangun bisnis Anda bersama Thrive!">
+    <meta name="keywords" content="Thrive, perusahaan IT, solusi IT, produk IT, bisnis, teknologi, Indonesia">
+    <meta name="author" content="Thrive">
+    <meta name="robots" content="index, follow">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Thrive - Perusahaan IT Terbaik Sejak 2007 di Indonesia">
+    <meta property="og:description"
+        content="Temukan berbagai solusi dan produk IT untuk beragam kebutuhan bisnis dan perusahaan. Bangun bisnis Anda bersama Thrive!">
+    <meta property="og:image" content="https://www.thrive.co.id/images/logo-thrive.png">
+    <meta property="og:url" content="https://www.thrive.co.id">
+    <meta property="og:site_name" content="Thrive">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Thrive - Perusahaan IT Terbaik Sejak 2007 di Indonesia">
+    <meta name="twitter:description"
+        content="Temukan berbagai solusi dan produk IT untuk beragam kebutuhan bisnis dan perusahaan. Bangun bisnis Anda bersama Thrive!">
+    <meta name="twitter:image" content="https://www.thrive.co.id/images/logo-thrive.png">
+    <meta name="twitter:url" content="https://www.thrive.co.id">
+    <meta name="twitter:site" content="@Thrive">
+
+    <link rel="shortcut icon" type="image/png" href="https://www.thrive.co.id/images/favicon.png">
+
+    <!-- Assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="{{ asset('/assets/vendor/fonts/boxicons.css') }}" />
-
     <link rel="stylesheet" href="{{ asset('/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('/assets/vendor/css/theme-default.css') }}"
         class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('/assets/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ asset('/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-
     <script src="{{ asset('/assets/vendor/js/helpers.js') }}"></script>
-
     <script src="{{ asset('/assets/js/config.js') }}"></script>
 
     <!-- Google font Inter -->
@@ -42,8 +64,7 @@
     </style>
 
     @stack('styles')
-    @vite([])
-    
+
     @livewireStyles
 </head>
 
@@ -106,7 +127,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
+                                                    <span
+                                                        class="fw-semibold d-block">{{ auth()->user()->name }}</span>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -115,12 +137,12 @@
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a class="dropdown-item" href="#">
                                             <i class="bx bx-user me-2"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -199,8 +221,8 @@
         }, 5000);
     </script>
 
-@stack('scripts')
-@livewireScripts
+    @stack('scripts')
+    @livewireScripts
 
 </body>
 
