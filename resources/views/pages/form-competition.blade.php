@@ -33,9 +33,9 @@ rules([
 ]);
 
 $save = function () {
-    try {
-        $this->validate();
+    $this->validate();
 
+    try {
         // Menyimpan data participant
         $participant = Participant::create([
             'fullname' => $this->fullname,
@@ -77,11 +77,11 @@ $save = function () {
             'text' => 'Formulir telah berhasil disubmit.',
         ]);
     } catch (\Throwable $th) {
-        $this->alert('error', 'Data tidak valid', [
+        $this->alert('error', 'Gagal menyimpan data', [
             'position' => 'center',
             'timer' => 3000,
             'toast' => false,
-            'text' => 'Mohon periksa kembali data yang diinput. Pastikan semua isian sesuai.',
+            'text' => 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.',
             'timerProgressBar' => true,
         ]);
     }
