@@ -10,7 +10,7 @@ class Follow extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'image', 'participant_id'
+        'image_path', 'participant_id'
     ];
 
     /**

@@ -43,7 +43,7 @@ $save = function () {
         $documentName = $this->generateDocumentName($this->document->getClientOriginalExtension());
         $documentPath = $this->document->storeAs(path: 'public/documents', name: $documentName);
         Document::create([
-            'image' => $documentPath,
+            'file_path' => $documentPath,
             'participant_id' => $participant->id,
         ]);
     }
@@ -53,13 +53,13 @@ $save = function () {
         $followName = $this->generateFollowName($follow->getClientOriginalExtension());
         $followPath = $follow->storeAs(path: 'public/follows', name: $followName);
         Follow::create([
-            'image' => $followPath,
+            'image_path' => $followPath,
             'participant_id' => $participant->id,
         ]);
     }
 
     // Reset form setelah submit berhasil
-    $this->reset();
+    $this->reset(['follows', 'fullname', 'email', 'whatsapp', 'blog_link', 'document']);
 
     // Beri notifikasi berhasil
     session()->flash('message', 'Form berhasil disubmit!');
@@ -73,7 +73,7 @@ $generateDocumentName = function ($extension) {
 
 $generateFollowName = function ($extension) {
     // Misalkan kita mengambil platform dari nama file asli
-    $platform = 'Platform';
+    $platform = 'PlatformFile' . rand(1, 1000);
     $originalName = pathinfo($this->follows[0]->getClientOriginalName(), PATHINFO_FILENAME);
     $fileName = "Bukti follow_{$platform}_{$originalName}_{$this->fullname}";
     $fileName = str_replace(' ', '_', $fileName) . '.' . $extension;

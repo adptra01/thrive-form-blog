@@ -1,7 +1,7 @@
 <?php
 
 use function Livewire\Volt\{computed, usesPagination, state};
-use App\Models\participant;
+use App\Models\Participant;
 use function Laravel\Folio\name;
 
 name('participants.index');
@@ -66,7 +66,10 @@ $participants = computed(function () {
                                             </a>
                                         </th>
                                         <th>
-                                            
+                                            <a href="{{ route('participants.show', ['participant' => $participant->id]) }}"
+                                                class="btn btn-primary btn-sm">
+                                                Detail
+                                            </a>
                                         </th>
                                     </tr>
                                 @endforeach

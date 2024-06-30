@@ -42,7 +42,7 @@
     </style>
 
 
-    @stack('css')
+    @stack('styles')
     @vite([])
 </head>
 

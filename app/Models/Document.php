@@ -10,7 +10,7 @@ class Document extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'image', 'participant_id'
+        'file_path', 'participant_id'
     ];
 
     /**

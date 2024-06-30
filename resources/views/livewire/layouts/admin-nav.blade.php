@@ -5,7 +5,7 @@
             <div data-i18n="home">Beranda</div>
         </a>
     </li>
-    <li class="menu-item {{ request()->is('admin/participants/*') ? 'active' : '' }}">
+    <li class="menu-item {{ request()->is(['admin/participants','admin/participants/*']) ? 'active' : '' }}">
         <a href="{{ route('participants.index') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-user"></i>
             <div data-i18n="home">Peserta</div>
