@@ -236,7 +236,7 @@ $updatedDocument = function () {
                                 <div class="card-body">
                                     <div class="hstack justify-content-between align-items-center">
                                         <i class="bi bi-file-earmark-post"></i>
-                                        {{ $document->getClientOriginalName() }}
+                                        {{ Str::limit($document->getClientOriginalName(), 20, '...') }}
                                         <a type="button" wire:click.prevent='$set("document", null)'>
                                             <i class="bi bi-x-lg"></i>
                                         </a>

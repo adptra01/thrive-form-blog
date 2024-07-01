@@ -8,12 +8,32 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Login SI Perpustakaan</title>
+    <title>{{ $title ?? 'Thrive Web Blog Competition 2024' }} - Perusahaan IT Terbaik Sejak 2007 di Indonesia</title>
+    <meta name="description"
+        content="Temukan berbagai solusi dan produk IT untuk beragam kebutuhan bisnis dan perusahaan. Bangun bisnis Anda bersama Thrive!">
+    <meta name="keywords" content="Thrive, perusahaan IT, solusi IT, produk IT, bisnis, teknologi, Indonesia">
+    <meta name="author" content="Thrive">
+    <meta name="robots" content="index, follow">
 
-    <meta name="description" content="" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Thrive - Perusahaan IT Terbaik Sejak 2007 di Indonesia">
+    <meta property="og:description"
+        content="Temukan berbagai solusi dan produk IT untuk beragam kebutuhan bisnis dan perusahaan. Bangun bisnis Anda bersama Thrive!">
+    <meta property="og:image" content="https://www.thrive.co.id/images/logo-thrive.png">
+    <meta property="og:url" content="https://www.thrive.co.id">
+    <meta property="og:site_name" content="Thrive">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Thrive - Perusahaan IT Terbaik Sejak 2007 di Indonesia">
+    <meta name="twitter:description"
+        content="Temukan berbagai solusi dan produk IT untuk beragam kebutuhan bisnis dan perusahaan. Bangun bisnis Anda bersama Thrive!">
+    <meta name="twitter:image" content="https://www.thrive.co.id/images/logo-thrive.png">
+    <meta name="twitter:url" content="https://www.thrive.co.id">
+    <meta name="twitter:site" content="@Thrive">
+
+    <link rel="shortcut icon" type="image/png" href="https://www.thrive.co.id/images/favicon.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,6 +52,7 @@
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}">
 
     <!-- Page CSS -->
     <!-- Page -->

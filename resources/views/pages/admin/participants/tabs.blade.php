@@ -79,9 +79,9 @@
             @endforeach
         @else
             @foreach ($participant->follows as $no => $item)
-                <a wire:ignore data-fancybox href="https://lipsum.app/id/1/1600x1200"
-                    data-caption="{{ $item->image_path }}">
-                    <img src="https://lipsum.app/id/1/200x150" width="200" height="150" alt=""
+                <a wire:ignore data-fancybox href="{{ Storage::url($item->image_path) }}"
+                    data-caption="{{ Storage::url($item->image_path) }}">
+                    <img src="{{ Storage::url($item->image_path) }}" width="200" height="150" alt="image follow scial media" style="object-fit: cover"
                         class="m-1" />
                 </a>
             @endforeach
