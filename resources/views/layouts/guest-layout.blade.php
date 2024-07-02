@@ -48,44 +48,29 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}">
     @stack('styles')
     @livewireStyles
-    
+    @vite([])
 </head>
 
 <body>
-    <div class="box">
-        <div class="square" style="--i:0;"></div>
-        <div class="square" style="--i:1;"></div>
-        <div class="square" style="--i:2;"></div>
-        <div class="square" style="--i:3;"></div>
-        <div class="square" style="--i:4;"></div>
-        <div class="square" style="--i:5;"></div>
+    <div class="container-fluid col-10 col-lg-8 pt-5">
+        <header>
+            <img src="{{ asset('/assets/img/Image_Banner.svg') }}" class="img-fluid rounded" width="100%"
+                alt="{{ $title ?? '' }}">
 
-        <main>
-            <div class="container-fluid px-5 pt-5">
-                <div class="row">
-                    <div class="col-md sticky-column">
-                        <div class="sticky-top">
-                            <img src="{{ asset('/assets/img/Image_Banner.svg') }}" class="img-fluid rounded"
-                                width="100%" alt="{{ $title ?? '' }}">
-
-                            <div class="card border-responsive mb-3 mt-3 mt-md-5">
-                                <div class="card-body">
-                                    <h6 class="title text-capitalize text-center fw-semibold responsive-font">
-                                        Thrive
-                                        Blog Competition 2024
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md scroll-column">
-                        {{ $slot }}
-                    </div>
+            <div class="card border-responsive my-3">
+                <div class="card-body">
+                    <h6 class="title text-capitalize text-center fw-semibold responsive-font">
+                        Thrive
+                        Blog Competition 2024
+                    </h6>
                 </div>
             </div>
+        </header>
+
+        <main>
+            {{ $slot }}
         </main>
     </div>
-
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

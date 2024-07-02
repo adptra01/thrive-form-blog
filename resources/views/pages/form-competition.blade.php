@@ -195,7 +195,7 @@ $updatedDocument = function () {
                 <div class="card my-3 border-0">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="blog_link" class="form-label">Link atau URL bukti tayang / published link
+                            <label for="blog_link" class="form-label">Link atau URL bukti tayang / link publikasi blog
                                 blog</label>
                             <input type="url" class="form-control rounded-3" value="{{ old('blog_link') }}"
                                 wire:model="blog_link" id="blog_link" aria-describedby="blog_linkId"
@@ -214,7 +214,7 @@ $updatedDocument = function () {
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="documentInput" class="form-label">
-                                Upload Document
+                                Upload karya tulis dalam bentuk file
                             </label>
                             <label id="dropZone"
                                 class="d-flex align-items-center justify-content-center flex-column w-100 {{ $document ? 'd-none' : '' }}">

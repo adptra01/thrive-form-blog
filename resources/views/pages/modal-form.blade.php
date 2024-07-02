@@ -118,11 +118,12 @@
                             <li>
                                 Peserta Thrive Blog Competition 2024 dapat memilih satu (1) jenis ET PC Desktop
                                 Workstation yang akan dimuat pada artikel / blog yang akan dipublish, pilihan varian nya
-                                adalah :
-                                <strong>ET Station Pro, ET Station One, dan ET After Effect</strong>
-                                (informasi lengkap tentang
-                                masing-masing product ET PC Desktop Workstation dapat dilihat pada: <a
-                                    href="https://www.thrive.co.id/product/et-pc-desktop-workstation">https://www.thrive.co.id/product/et-pc-desktop-workstation</a>).
+                                adalah : <strong>ET Station Pro, ET Station One,  ET After Effect dan ET
+                                    Solidworks</strong> (informasi
+                                lengkap tentang masing-masing product ET PC Desktop Workstation dapat dilihat pada:
+                                <a href="https://www.thrive.co.id/product/et-pc-desktop-workstation">
+                                    https://www.thrive.co.id/product/et-pc-desktop-workstation
+                                </a>)
 
                             </li>
                             <li>
@@ -206,13 +207,12 @@
                                 mengisi beberapa data pribadi & artikel / blog.
                             </li>
                             <li>
-                                Peserta Thrive Blog Competition 2024
-                                <strong>
-                                    wajib follow tiktok Thrive (@thrive.itsolutions &
-                                    @thrivecommerce), Instagram (@thrive.itsolutions) dan Youtube
-                                    (@alphagame3610)
-                                </strong>,
-                                screenshot bukti follow akan diwajibkan pada form registrasi.
+                                Peserta Thrive Blog Competition 2024 <strong>
+                                    wajib follow TikTok (@thrive.itsolutions &
+                                    @thrivecommerce), Instagram (@thrive.itsolutions) dan Youtube (@alphagame3610) serta
+                                    Shopee dan Tokopedia Thrive Commerce</strong>, screenshot bukti follow akan diwajibkan pada form
+                                registrasi.
+
                             </li>
                         </ol>
 
