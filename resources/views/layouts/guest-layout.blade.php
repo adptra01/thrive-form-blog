@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}">
     @stack('styles')
     @livewireStyles
-    @vite([])
+    
 </head>
 
 <body>
