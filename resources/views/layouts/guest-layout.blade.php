@@ -48,22 +48,18 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}">
     @stack('styles')
     @livewireStyles
-    
+    @vite([])
 </head>
 
 <body>
-    <div class="container-fluid col-10 col-lg-8 pt-5">
+    <div class="container-fluid col-11 pt-4">
         <header>
-            <img src="{{ asset('/assets/img/Image_Banner.svg') }}" class="img-fluid rounded" width="100%"
+            <img src="{{ asset('/assets/img/Banner.png') }}" class="img-fluid rounded" width="100%"
                 alt="{{ $title ?? '' }}">
 
-            <div class="card border-responsive my-3">
-                <div class="card-body">
-                    <h6 class="title text-capitalize text-center fw-semibold responsive-font">
-                        Thrive
-                        Blog Competition 2024
-                    </h6>
-                </div>
+            <div class="card my-3 border-0">
+                <img src="{{ asset('/assets/img/Title_Banner.png') }}" class="img-fluid rounded" width="100%"
+                    alt="{{ $title ?? '' }}">
             </div>
         </header>
 

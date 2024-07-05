@@ -177,7 +177,7 @@ $updatedDocument = function () {
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="whatsapp" class="form-label">
-                                No Whatsapp
+                                Nomor Whatsapp (aktif dan dapat dihubungi)
                             </label>
                             <input type="number" class="form-control rounded-3" value="{{ old('whatsapp') }}"
                                 wire:model="whatsapp" id="whatsapp" aria-describedby="whatsappId"
@@ -195,8 +195,9 @@ $updatedDocument = function () {
                 <div class="card my-3 border-0">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="blog_link" class="form-label">Link atau URL bukti tayang / link publikasi blog
-                                blog</label>
+                            <label for="blog_link" class="form-label">
+                                Link Published dari Karya Tulis / Bukti Tayang Blog Artikel
+                            </label>
                             <input type="url" class="form-control rounded-3" value="{{ old('blog_link') }}"
                                 wire:model="blog_link" id="blog_link" aria-describedby="blog_linkId"
                                 placeholder="link atau url" />
@@ -215,9 +216,13 @@ $updatedDocument = function () {
                         <div class="mb-3">
                             <label for="documentInput" class="form-label">
                                 Upload karya tulis dalam bentuk file
+                                <div wire:loading wire:target='document' class="spinner-border spinner-border-sm"
+                                    role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </label>
                             <label id="dropZone"
-                                class="d-flex align-items-center justify-content-center flex-column w-100 {{ $document ? 'd-none' : '' }}">
+                                class="zoom-in d-flex align-items-center justify-content-center flex-column w-100 {{ $document ? 'd-none' : '' }}">
                                 <p> <i class="bi bi-cloud-arrow-down"></i>
                                 </p>
                                 <small style="font-size: 17px;">Drop file here or click to upload</small>
@@ -232,7 +237,7 @@ $updatedDocument = function () {
                         </div>
 
                         @if ($document)
-                            <div class="card my-2">
+                            <div class="card my-2 zoom-in">
                                 <div class="card-body">
                                     <div class="hstack justify-content-between align-items-center">
                                         <i class="bi bi-file-earmark-post"></i>
@@ -262,9 +267,13 @@ $updatedDocument = function () {
                         <div class="mb-3">
                             <label for="imageInput" class="form-label">
                                 Bukti follow akun social media Thrive Indonesia
+                                <div wire:loading wire:target='follows, removeItem' class="spinner-border spinner-border-sm"
+                                    role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </label>
                             <label for="imageInput"
-                                class="{{ $follows ? (count($follows) >= 5 ? 'd-none' : '') : '' }} w-100">
+                                class="{{ $follows ? (count($follows) >= 5 ? 'd-none' : '') : '' }} w-100 zoom-in">
                                 <div id="dropZone" class="d-flex align-items-center justify-content-center flex-column">
                                     <p> <i class="bi bi-cloud-arrow-down"></i>
                                     </p>
@@ -283,7 +292,7 @@ $updatedDocument = function () {
 
                         @if (!empty($follows))
                             @foreach ($follows as $key => $item)
-                                <div class="card my-2">
+                                <div class="card my-2 zoom-in">
                                     <div class="card-body">
                                         <div class="hstack justify-content-between align-items-center">
                                             <div class="me-2" style="font-size: 2rem; color: #777;">

@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 .title {
-    font-family: "DM Serif Display", serif;
-    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
     font-style: normal;
+    color: #D94A25;
 }
 
 body {
-    font-family: "DM Sans", sans-serif;
+    font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
@@ -147,13 +148,13 @@ body {
 
 /* custom color btn */
 .color-custom {
-    color: #E17126;
+    color: #D94A25;
 }
 
 .btn-custom {
     color: #fff;
-    background-color: #E17126;
-    border-color: #E17126;
+    background-color: #D94A25;
+    border-color: #D94A25;
 }
 .btn-custom:hover {
     color: #fff;
@@ -176,19 +177,19 @@ body {
 }
 
 .btn-outline-custom {
-    color: #E17126;
+    color: #D94A25;
     background-color: transparent;
-    border-color: #E17126;
+    border-color: #D94A25;
 }
 .btn-outline-custom:hover {
     color: #fff;
-    background-color: #E17126;
-    border-color: #E17126;
+    background-color: #D94A25;
+    border-color: #D94A25;
 }
 .btn-outline-custom:focus, .btn-outline-custom.focus {
     color: #fff;
-    background-color: #E17126;
-    border-color: #E17126;
+    background-color: #D94A25;
+    border-color: #D94A25;
     box-shadow: 0 0 0 0.2rem rgba(225, 113, 38, 0.5);
 }
 .btn-outline-custom:active, .btn-outline-custom.active, .show > .btn-outline-custom.dropdown-toggle {
@@ -210,3 +211,37 @@ body {
     font-family: Arial, sans-serif;
     color: #bbb;
 }
+
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.zoom-in {
+    animation: zoomIn 0.3s forwards;
+}
+
+.zoom-out {
+    animation: zoomOut 0.3s forwards;
+}
+
