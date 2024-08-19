@@ -78,11 +78,7 @@ $descriptionSaved = function () {
 
             <div class="card">
                 <div class="card-body">
-                    <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
-                        <img class="img-fluid w-60"
-                            src="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/assets/img/illustrations/sitting-girl-with-laptop-dark.png"
-                            alt="Card girl image">
-                    </div>
+
                     <div class="mb-3 row">
                         <p class="col-md-3 fw-bold">Nama Lengkap</p>
                         <div class="col-md-9 d-flex">
